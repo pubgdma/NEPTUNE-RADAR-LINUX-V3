@@ -1,0 +1,16 @@
+[Unit]
+Description=Neptune Radar
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=__APP_DIR__
+ExecStart=/usr/bin/env bash __APP_DIR__/start-radar.sh
+Restart=always
+RestartSec=2
+User=root
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+

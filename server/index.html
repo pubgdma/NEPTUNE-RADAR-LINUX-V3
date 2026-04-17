@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="NEPTUNE Radar"/>
+  <title>NEPTUNE Radar</title>
+  <link rel="icon" href="/static/media/icons/favicon.ico"/>
+  <link rel="stylesheet" href="/neptune-style.css"/>
+  <script defer src="/neptune-frontend.js"></script>
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <div id="intro" class="intro-screen">
+      <div class="intro-radar">
+        <div class="intro-grid"></div>
+        <div class="intro-sweep"></div>
+        <div class="intro-ring ring-a"></div>
+        <div class="intro-ring ring-b"></div>
+        <div class="intro-ring ring-c"></div>
+        <div class="intro-blip blip-a"></div>
+        <div class="intro-blip blip-b"></div>
+        <div class="intro-blip blip-c"></div>
+        <div class="intro-logo"></div>
+      </div>
+      <div class="intro-copy">
+        <span class="eyebrow">NEPTUNE</span>
+        <h1>RADAR</h1>
+        <p data-i18n="intro_waiting">Waiting for Match to Start</p>
+      </div>
+    </div>
+
+    <canvas id="radar-canvas"></canvas>
+
+    <div class="hud hud-top">
+      <div class="brand-panel">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-title" data-i18n="brand_title">NEPTUNE WEB RADAR</div>
+          <div id="status-line" class="brand-subtitle">Waiting for live telemetry</div>
+        </div>
+      </div>
+      <div class="top-stats">
+        <div id="spectator-chip" class="stat-chip spectator-chip-strong">
+          <span class="stat-label" data-i18n="spectators">Spectators</span>
+          <span id="spectator-count" class="stat-value">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hud hud-top-right">
+      <button id="zoom-in" class="zoom-btn" type="button">+</button>
+      <button id="zoom-out" class="zoom-btn" type="button">-</button>
+    </div>
+
+    <div class="hud hud-top-center">
+      <div class="quick-follow-bar">
+        <button class="quick-follow-btn quick-follow-auto" type="button" data-follow-auto="1" data-i18n="auto">Auto</button>
+        <button class="quick-follow-btn" type="button" data-follow-slot="1">1</button>
+        <button class="quick-follow-btn" type="button" data-follow-slot="2">2</button>
+        <button class="quick-follow-btn" type="button" data-follow-slot="3">3</button>
+        <button class="quick-follow-btn" type="button" data-follow-slot="4">4</button>
+        <button class="quick-follow-btn quick-follow-free" type="button" data-follow-free="1" data-i18n="free">Free</button>
+      </div>
+    </div>
+
+    <div class="hud hud-bottom-left">
+      <a class="watermark" href="https://www.nepdma.com" target="_blank" rel="noopener noreferrer">WWW.NEPDMA.COM</a>
+    </div>
+    <div class="hud hud-bottom-right">
+      <a class="watermark" href="https://store.pubgdma.com" target="_blank" rel="noopener noreferrer">WWW.PUBGDMA.COM</a>
+    </div>
+
+    <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false">
+      <span class="menu-toggle-ring"></span>
+      <span class="menu-toggle-label" data-i18n="radar_menu">Radar Menu</span>
+    </button>
+
+    <aside id="menu-panel" class="menu-panel" aria-hidden="true">
+      <div id="menu-header" class="menu-header">
+        <div>
+          <h2 data-i18n="radar_settings">Radar Settings</h2>
+        </div>
+        <button id="menu-close" class="menu-close" type="button">×</button>
+      </div>
+
+      <div class="menu-tabs">
+        <button class="menu-tab active" type="button" data-tab="camera" data-i18n="camera">Camera</button>
+        <button class="menu-tab" type="button" data-tab="players" data-i18n="players">Players</button>
+        <button class="menu-tab" type="button" data-tab="vehicles" data-i18n="vehicles">Vehicles</button>
+        <button class="menu-tab" type="button" data-tab="misc" data-i18n="misc">Misc</button>
+      </div>
+
+      <div class="menu-body">
+        <section class="menu-view active" data-view="camera">
+          <div class="menu-grid">
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="camera">Camera</div>
+              <button id="follow-toggle" class="primary-action" type="button" data-i18n="automatic_follow">Automatic Follow</button>
+              <label class="field">
+                <span data-i18n="follow_player">Follow player</span>
+                <select id="follow-select"></select>
+              </label>
+            </section>
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="live">Live</div>
+              <div id="map-name" class="info-line">Map: Unknown</div>
+              <div id="follow-name" class="info-line">Follow: Auto</div>
+              <div id="connection-state" class="info-line">Socket: Connecting...</div>
+            </section>
+          </div>
+        </section>
+
+        <section class="menu-view" data-view="players">
+          <div class="menu-grid">
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="players">Players</div>
+              <div class="toggle-row">
+                <button id="palette-mode-classic" class="segmented active" type="button" data-i18n="classic_colors">Classic Colors</button>
+                <button id="palette-mode-neptune" class="segmented" type="button" data-i18n="neptune_colors">Neptune Colors</button>
+              </div>
+              <div class="custom-color-panel">
+                <button id="custom-color-toggle" class="segmented custom-color-toggle active" type="button" data-i18n="custom_color">Custom Color</button>
+                <div id="custom-color-body" class="custom-color-body">
+                  <div class="custom-color-grid">
+                    <div class="field compact-field color-field">
+                      <span data-i18n="partner_color">Partner color</span>
+                      <input id="partner-color" class="color-compact" type="color" value="#ff9f1a"/>
+                    </div>
+                    <div class="field compact-field color-field">
+                      <span data-i18n="player_info_color">Player info color</span>
+                      <input id="player-info-color" class="color-compact" type="color" value="#effcff"/>
+                    </div>
+                    <div class="field compact-field color-field">
+                      <span data-i18n="player_color">Player color</span>
+                      <input id="player-color" class="color-compact" type="color" value="#48d7ff"/>
+                    </div>
+                    <div class="field compact-field color-field">
+                      <span data-i18n="friendly_color">Friendly color</span>
+                      <input id="friendly-color" class="color-compact" type="color" value="#53d86a"/>
+                    </div>
+                    <div class="field compact-field color-field">
+                      <span data-i18n="bot_ai_color">Bot / AI color</span>
+                      <input id="ai-color" class="color-compact" type="color" value="#4d8bff"/>
+                    </div>
+                    <div class="field compact-field color-field">
+                      <span data-i18n="enemy_color">Enemy color</span>
+                      <input id="enemy-color" class="color-compact" type="color" value="#b53a47"/>
+                    </div>
+                    <div class="field compact-field color-field">
+                      <span data-i18n="knocked_color">Knocked color</span>
+                      <input id="knocked-color" class="color-compact" type="color" value="#808080"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="field">
+                <span data-i18n="friendly_aimline">Friendly aimline</span>
+                <input id="aimline-length" type="range" min="20" max="220" step="2" value="52"/>
+              </label>
+              <label class="field">
+                <span data-i18n="own_aimline">Own aimline</span>
+                <input id="own-aimline-length" type="range" min="40" max="2000" step="10" value="1020"/>
+              </label>
+              <label class="field">
+                <span data-i18n="enemy_aimline">Enemy aimline</span>
+                <input id="threat-aimline-length" type="range" min="20" max="3000" step="10" value="100"/>
+              </label>
+                <label class="field">
+                  <span data-i18n="threat_focus_aimline">Enemy focus aimline</span>
+                  <input id="threat-focus-aimline-length" type="range" min="100" max="8000" step="25" value="900"/>
+                </label>
+              <label class="field">
+                <span data-i18n="aimline_thickness">Aimline thickness</span>
+                <input id="aimline-width" type="range" min="1" max="8" step="0.5" value="1.5"/>
+              </label>
+              <div class="field compact-field color-field">
+                <span data-i18n="aimline_color">Aimline color</span>
+                <input id="aimline-color" class="color-compact color-box" type="color" value="#ffffff"/>
+              </div>
+            </section>
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="player_info">Player Info</div>
+              <label class="check-field">
+                <input id="show-player-names" type="checkbox" checked/>
+                <span data-i18n="show_player_names">Show player info</span>
+              </label>
+              <label class="check-field">
+                <input id="show-player-names-toggle" type="checkbox" checked/>
+                <span data-i18n="player_names_compact">Player Names</span>
+              </label>
+              <label class="check-field">
+                <input id="show-own-name" type="checkbox" checked/>
+                <span data-i18n="own_name">Own Name</span>
+              </label>
+              <label class="check-field">
+                <input id="show-team-names" type="checkbox" checked/>
+                <span data-i18n="team_names">Team Names</span>
+              </label>
+                <label class="check-field">
+                  <input id="show-player-kd" type="checkbox" checked/>
+                  <span data-i18n="player_kd">Player Kills</span>
+                </label>
+              <label class="check-field">
+                <input id="show-player-distance" type="checkbox" checked/>
+                <span data-i18n="player_distance">Player Distance</span>
+              </label>
+              <label class="check-field">
+                <input id="show-player-spectators" type="checkbox" checked/>
+                <span data-i18n="player_spectators">Spectators</span>
+              </label>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-player-health" type="checkbox" checked/>
+                  <span data-i18n="player_healthbar">Player Healthbar</span>
+                </label>
+                <input id="scale-player-health" class="misc-slider" type="range" min="0.6" max="2.5" step="0.1" value="1.55"/>
+              </div>
+              <label class="field">
+                <span data-i18n="player_info_position">Player info position</span>
+                <select id="player-info-position">
+                  <option value="above" data-i18n="above">Above</option>
+                  <option value="below" data-i18n="below" selected>Below</option>
+                </select>
+              </label>
+              <label class="field">
+                <span data-i18n="player_text_size">Player text size</span>
+                <input id="player-text-size" type="range" min="10" max="24" step="1" value="12"/>
+              </label>
+              <label class="field">
+                <span data-i18n="player_icon_size">Player icon size</span>
+                <input id="player-icon-size" type="range" min="8" max="26" step="1" value="10"/>
+              </label>
+            </section>
+          </div>
+        </section>
+
+        <section class="menu-view" data-view="vehicles">
+          <div class="menu-grid vehicles-layout">
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="vehicles">Vehicles</div>
+              <div class="palette-toggle-row">
+                <button id="vehicle-mode-car" class="segmented" type="button" data-i18n="car_icon">Car Icon</button>
+                <button id="vehicle-mode-render" class="segmented active" type="button" data-i18n="vehicle_renders">PUBG Icon</button>
+                <button id="vehicle-mode-dot" class="segmented" type="button" data-i18n="dot_mode">No Icon</button>
+              </div>
+              <div class="misc-row vehicle-tight-row">
+                <label class="check-field misc-check">
+                  <input id="show-vehicle-icons" type="checkbox" checked/>
+                  <span data-i18n="vehicle_icons">Vehicle Icons</span>
+                </label>
+                <input id="scale-vehicle-icons" class="misc-slider" type="range" min="0.4" max="8.0" step="0.1" value="4.2"/>
+              </div>
+              <div class="misc-row vehicle-tight-row">
+                <label class="check-field misc-check">
+                  <input id="show-vehicle-names" type="checkbox" checked/>
+                  <span data-i18n="vehicle_names">Vehicle Names</span>
+                </label>
+                <input id="scale-vehicle-names" class="misc-slider" type="range" min="0.6" max="2.5" step="0.1" value="1"/>
+              </div>
+              <label class="field">
+                <span data-i18n="vehicle_name_position">Vehicle Text</span>
+                <select id="vehicle-name-position">
+                  <option value="above" data-i18n="above">Above</option>
+                  <option value="below" data-i18n="below">Below</option>
+                </select>
+              </label>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-airplane-icons" type="checkbox" checked/>
+                  <span data-i18n="airplane_icons">Airplane Icons</span>
+                </label>
+                <input id="scale-airplane-icons" class="misc-slider" type="range" min="0.4" max="8.0" step="0.1" value="4.2"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-airplane-names" type="checkbox" checked/>
+                  <span data-i18n="airplane_name">Airplane Name</span>
+                </label>
+                <input id="scale-airplane-names" class="misc-slider" type="range" min="0.6" max="2.5" step="0.1" value="1"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-airplane-route" type="checkbox" checked/>
+                  <span data-i18n="airplane_route">Airplane Flight Route</span>
+                </label>
+                <input id="scale-airplane-route" class="misc-slider" type="range" min="0.5" max="6.0" step="0.1" value="1.4"/>
+              </div>
+              <div class="misc-row airplane-color-grid">
+                <div class="field compact-field color-field vehicle-color-field">
+                  <span data-i18n="airplane_icon_color">Icon Color</span>
+                  <input id="airplane-icon-color" class="color-compact color-box" type="color" value="#ffffff"/>
+                </div>
+                <div class="field compact-field color-field vehicle-color-field">
+                  <span data-i18n="airplane_name_color">Name Color</span>
+                  <input id="airplane-name-color" class="color-compact color-box" type="color" value="#e0f8ff"/>
+                </div>
+                <div class="field compact-field color-field vehicle-color-field airplane-route-color-field">
+                  <span data-i18n="airplane_route_color">Route Color</span>
+                  <label class="color-box">
+                    <input id="airplane-route-color" type="color" value="#ffffff"/>
+                  </label>
+                </div>
+              </div>
+            </section>
+            <aside class="menu-card vehicle-preview-side" aria-hidden="true">
+              <div class="menu-card-title" data-i18n="preview">Preview</div>
+              <div class="vehicle-preview-card">
+                <div id="vehicle-mode-preview" class="vehicle-preview-body vehicle-preview-car">
+                  <img id="vehicle-preview-car-image" class="vehicle-preview-image vehicle-preview-image-car" src="/static/media/icons/Car.png" alt="Car preview"/>
+                  <img id="vehicle-preview-render-image" class="vehicle-preview-image vehicle-preview-image-render" src="/static/media/vehicles/dacia.png" alt="PUBG vehicle preview"/>
+                  <div id="vehicle-preview-dot" class="vehicle-preview-dot-mark"></div>
+                </div>
+                <div class="vehicle-preview-meta">
+                  <div id="vehicle-preview-name" class="vehicle-preview-name">Dacia</div>
+                  <div class="vehicle-preview-sub" data-i18n="preview_vehicle_text">Vehicle preview on map</div>
+                </div>
+              </div>
+              <div class="vehicle-preview-colors">
+                <div id="vehicle-car-color-wrap" class="field compact-field color-field vehicle-color-field">
+                      <span data-i18n="car_color">Icon Color</span>
+                  <input id="vehicle-car-color" class="color-compact color-box" type="color" value="#ffffff"/>
+                </div>
+                <div id="vehicle-dot-color-wrap" class="field compact-field color-field vehicle-color-field">
+                  <span data-i18n="dot_color">Dot Color</span>
+                  <input id="vehicle-dot-color" class="color-compact color-box" type="color" value="#ffffff"/>
+                </div>
+                <div class="field compact-field color-field vehicle-color-field vehicle-name-color-field">
+                  <span data-i18n="vehicle_names_color">Names Color</span>
+                  <input id="vehicle-name-color" class="color-compact color-box" type="color" value="#e0f8ff"/>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="menu-view" data-view="misc">
+          <div class="menu-grid">
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="misc">Misc</div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-f3-marker" type="checkbox" checked/>
+                  <span data-i18n="marker">Marker</span>
+                </label>
+                <input id="scale-f3-marker" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1.66"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-airdrop-closed" type="checkbox" checked/>
+                  <span data-i18n="airdrop">Airdrop</span>
+                </label>
+                <input id="scale-airdrop-closed" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1.45"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-airdrop-flying" type="checkbox" checked/>
+                  <span data-i18n="flying_airdrop">Flying Airdrop</span>
+                </label>
+                <input id="scale-airdrop-flying" class="misc-slider" type="range" min="0.4" max="6.0" step="0.1" value="2.08"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-deathcrate" type="checkbox" checked/>
+                  <span data-i18n="deathcrate">Deathcrate</span>
+                </label>
+                <input id="scale-deathcrate" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-chip-tower" type="checkbox" checked/>
+                  <span data-i18n="chip_tower">Chip Tower</span>
+                </label>
+                <input id="scale-chip-tower" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1"/>
+              </div>
+              <div class="misc-row">
+                <label class="check-field misc-check">
+                  <input id="show-secret-room" type="checkbox" checked/>
+                  <span data-i18n="secret_room">Secret Room</span>
+                </label>
+                <input id="scale-secret-room" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1"/>
+              </div>
+            </section>
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="preferences">Preferences</div>
+              <label class="field">
+                <span data-i18n="language">Language</span>
+                <select id="language-select">
+                  <option value="en">English</option>
+                  <option value="zh">Chinese</option>
+                  <option value="ko">Korean</option>
+                  <option value="de">German</option>
+                  <option value="tr">Turkish</option>
+                  <option value="pt">Portuguese</option>
+                  <option value="ru">Russian</option>
+                </select>
+              </label>
+              <div class="field compact-field color-field">
+                <span data-i18n="menu_color">Menu color</span>
+                <input id="menu-color" class="color-compact" type="color" value="#2dffd3"/>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

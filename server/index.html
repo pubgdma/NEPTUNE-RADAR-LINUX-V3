@@ -47,6 +47,10 @@
           <span class="stat-label" data-i18n="spectators">Spectators</span>
           <span id="spectator-count" class="stat-value">0</span>
         </div>
+        <div id="fps-chip" class="stat-chip fps-chip hidden">
+          <span class="stat-label" data-i18n="fps">FPS</span>
+          <span id="fps-count" class="stat-value">0</span>
+        </div>
       </div>
     </div>
 
@@ -401,6 +405,25 @@
                 <span data-i18n="menu_color">Menu color</span>
                 <input id="menu-color" class="color-compact" type="color" value="#2dffd3"/>
               </div>
+              <label class="field">
+                <span data-i18n="system_profile">System Profile</span>
+                <select id="system-profile">
+                  <option value="high" data-i18n="high_end_system">High-End System</option>
+                  <option value="low" data-i18n="low_end_system">Low-End System</option>
+                </select>
+              </label>
+              <label class="field">
+                <span data-i18n="fps_limit">FPS Limit</span>
+                <select id="fps-limit">
+                  <option value="60">60 FPS</option>
+                  <option value="90">90 FPS</option>
+                  <option value="0">Unlimited</option>
+                </select>
+              </label>
+              <label class="check-field misc-check">
+                <input id="show-fps-meter" type="checkbox"/>
+                <span data-i18n="fps_meter">FPS Meter</span>
+              </label>
             </section>
           </div>
         </section>

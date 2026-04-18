@@ -25,10 +25,7 @@ body.mobile-route .hud-top {
 }
 
 body.mobile-route .brand-panel {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 16px;
-  gap: 12px;
+  display: none;
 }
 
 body.mobile-route .brand-mark,
@@ -59,18 +56,18 @@ body.mobile-route .spectator-chip-strong,
 body.mobile-route .fps-chip {
   min-width: 0;
   flex: 1 1 0;
-  padding: 12px 14px;
-  gap: 10px;
+  padding: 10px 12px;
+  gap: 8px;
 }
 
 body.mobile-route .spectator-chip-strong .stat-label,
 body.mobile-route .fps-chip .stat-label {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 body.mobile-route .spectator-chip-strong .stat-value,
 body.mobile-route .fps-chip .stat-value {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 body.mobile-route .hud-top-right {

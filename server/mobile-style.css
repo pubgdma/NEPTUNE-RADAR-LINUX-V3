@@ -134,6 +134,13 @@ body.mobile-route .menu-toggle {
   z-index: 10;
 }
 
+body.mobile-route.mobile-menu-open .menu-toggle,
+body.mobile-route.mobile-menu-open .hud-top-right,
+body.mobile-route.mobile-menu-open .hud-top-center {
+  opacity: 0;
+  pointer-events: none;
+}
+
 body.mobile-route .menu-panel {
   left: 0 !important;
   right: 0 !important;
@@ -190,6 +197,7 @@ body.mobile-route .menu-tab {
 body.mobile-route .menu-body {
   max-height: calc(100dvh - 180px);
   padding-right: 0;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
 }
 
 body.mobile-route .menu-grid,

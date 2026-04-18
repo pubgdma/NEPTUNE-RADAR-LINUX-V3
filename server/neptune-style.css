@@ -65,6 +65,12 @@ select {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.hud-top > * {
+  pointer-events: auto;
 }
 
 .brand-panel,
@@ -130,9 +136,9 @@ select {
 
 .top-stats {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
   max-width: min(48vw, 440px);
 }
 
@@ -227,6 +233,35 @@ select {
     0 18px 42px rgba(0, 0, 0, 0.4);
 }
 
+.fps-chip {
+  min-width: 188px;
+  padding: 16px 22px;
+  border-width: 1.5px;
+  border-color: rgba(116, 236, 255, 0.38);
+  background: linear-gradient(180deg, rgba(7, 18, 30, 0.94), rgba(5, 14, 24, 0.88));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow:
+    0 0 0 1px rgba(116, 236, 255, 0.18),
+    0 18px 42px rgba(0, 0, 0, 0.38),
+    0 0 24px rgba(116, 236, 255, 0.12);
+}
+
+.fps-chip .stat-label {
+  margin-bottom: 0;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+  color: rgba(214, 245, 255, 0.94);
+}
+
+.fps-chip .stat-value {
+  font-size: 28px;
+  color: #f3fcff;
+}
+
 .hidden {
   display: none !important;
 }
@@ -244,6 +279,8 @@ select {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 8;
+  pointer-events: auto;
 }
 
 .quick-follow-bar {
@@ -847,9 +884,9 @@ select {
 .check-field input {
   appearance: none;
   -webkit-appearance: none;
-  width: 46px;
-  min-width: 46px;
-  height: 26px;
+  width: 50px;
+  min-width: 50px;
+  height: 28px;
   margin: 0;
   border-radius: 999px;
   border: 1px solid rgba(109, 178, 196, 0.22);
@@ -870,23 +907,31 @@ select {
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #dffaff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
-  transition: transform .22s ease, background .18s ease;
+  background: linear-gradient(180deg, #effcff, #cfefff);
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.28),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55);
+  transition: transform .22s ease, background .18s ease, box-shadow .18s ease;
 }
 
 .check-field input:checked {
   background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 28%, rgba(255,255,255,0) 72%), color-mix(in srgb, var(--accent) 46%, rgba(20,157,255,0.28) 54%));
   border-color: color-mix(in srgb, var(--accent) 46%, rgba(255,255,255,0) 54%);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 14%, rgba(255,255,255,0) 86%), 0 0 12px color-mix(in srgb, var(--accent) 12%, rgba(255,255,255,0) 88%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 14%, rgba(255,255,255,0) 86%),
+    0 0 12px color-mix(in srgb, var(--accent) 12%, rgba(255,255,255,0) 88%),
+    0 0 20px color-mix(in srgb, var(--accent) 10%, rgba(255,255,255,0) 90%);
 }
 
 .check-field input:checked::before {
-  transform: translateX(20px);
+  transform: translateX(22px);
   background: #ffffff;
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(255, 255, 255, 0.35);
 }
 
 .check-field input:focus-visible {

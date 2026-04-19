@@ -6,8 +6,6 @@
 - 1 vCPU core
 - 4 GB RAM (maybe less will work but I didn't test)
 - 50 GB NVMe disk space
-- Internet access during install
-- `sudo` access
 
 ## One-Line Install
 

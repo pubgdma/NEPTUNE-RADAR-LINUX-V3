@@ -11,6 +11,8 @@
 
 ## One-Line Install
 
+Use this one line to install or update your VPS to the latest version:
+
 Ubuntu / Debian:
 
 ```bash

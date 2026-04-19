@@ -23,6 +23,18 @@ Default install path:
 Default service:
 - `neptune-radar`
 
+Use the radar in a desktop or mobile browser.
+
+- Desktop browsers open the normal desktop layout automatically.
+- Mobile phones open the mobile layout automatically.
+- If needed, you can force a view manually:
+    - Desktop: http://ipAddressVPS:7823/?view=desktop
+    - Mobile: http://ipAddressVPS:7823/?view=mobile
+
+  The default radar address stays:
+
+  - http://ipAddressVPS:7823/
+
 ## Manual Local Install
 
 From the radar folder:

@@ -23,6 +23,8 @@ Default install path:
 Default service:
 - `neptune-radar`
 
+## Quick Start
+
 Use the radar in a desktop or mobile browser.
 - Desktop browsers open the normal desktop layout automatically.
 - Mobile phones open the mobile layout automatically.

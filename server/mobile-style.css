@@ -48,7 +48,7 @@ body.mobile-route .top-stats {
   width: auto;
   max-width: none;
   align-self: flex-start;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
   justify-content: flex-start;
   gap: 8px;
@@ -78,7 +78,7 @@ body.mobile-route .hud-top-right {
   right: 10px;
   flex-direction: column;
   gap: 8px;
-  z-index: 9;
+  z-index: 8;
 }
 
 body.mobile-route .mobile-camera-hud {
@@ -194,11 +194,19 @@ body.mobile-route .menu-toggle-ring::after {
 }
 
 body.mobile-route.mobile-menu-open .menu-toggle,
+body.mobile-route.mobile-menu-open .top-stats,
 body.mobile-route.mobile-menu-open .hud-top-right,
 body.mobile-route.mobile-menu-open .hud-top-center,
 body.mobile-route.mobile-menu-open .mobile-camera-hud {
   opacity: 0;
   pointer-events: none;
+}
+
+body.mobile-route.mobile-menu-open .top-stats,
+body.mobile-route.mobile-menu-open .hud-top-right,
+body.mobile-route.mobile-menu-open .hud-top-center,
+body.mobile-route.mobile-menu-open .mobile-camera-hud {
+  display: none !important;
 }
 
 body.mobile-route .menu-panel {
@@ -214,6 +222,7 @@ body.mobile-route .menu-panel {
   border-right: 0;
   border-bottom: 0;
   transform: translateY(100%);
+  z-index: 30;
 }
 
 body.mobile-route .menu-panel.open,

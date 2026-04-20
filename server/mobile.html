@@ -180,7 +180,7 @@
               </label>
               <label class="field">
                 <span data-i18n="enemy_aimline">Enemy aimline</span>
-                <input id="threat-aimline-length" type="range" min="20" max="3000" step="10" value="100"/>
+                <input id="threat-aimline-length" type="range" min="20" max="3000" step="10" value="20"/>
               </label>
                 <label class="field">
                   <span data-i18n="threat_focus_aimline">Enemy focus aimline</span>
@@ -419,12 +419,14 @@
                 <span data-i18n="system_profile">System Profile</span>
                 <select id="system-profile">
                   <option value="high" data-i18n="high_end_system">High-End System</option>
+                  <option value="mobile" data-i18n="mobile_system">Mobile System</option>
                   <option value="low" data-i18n="low_end_system">Low-End System</option>
                 </select>
               </label>
               <label class="field">
                 <span data-i18n="fps_limit">FPS Limit</span>
                 <select id="fps-limit">
+                  <option value="30">30 FPS</option>
                   <option value="60">60 FPS</option>
                   <option value="90">90 FPS</option>
                   <option value="0">Unlimited</option>

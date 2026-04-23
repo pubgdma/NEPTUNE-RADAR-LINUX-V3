@@ -45,13 +45,13 @@
         </div>
       </div>
       <div class="top-stats">
-        <div id="spectator-chip" class="stat-chip spectator-chip-strong">
-          <span class="stat-label" data-i18n="spectators">Spectators</span>
-          <span id="spectator-count" class="stat-value">0</span>
-        </div>
         <div id="fps-chip" class="stat-chip fps-chip hidden">
           <span class="stat-label" data-i18n="fps">FPS</span>
           <span id="fps-count" class="stat-value">0</span>
+        </div>
+        <div id="spectator-chip" class="stat-chip spectator-chip-strong">
+          <span class="stat-label" data-i18n="spectators">Spectators</span>
+          <span id="spectator-count" class="stat-value">0</span>
         </div>
       </div>
     </div>
@@ -415,6 +415,13 @@
                 <span data-i18n="menu_color">Menu color</span>
                 <input id="menu-color" class="color-compact" type="color" value="#2dffd3"/>
               </div>
+              <label class="field">
+                <span data-i18n="map_style">Map Style</span>
+                <select id="map-style">
+                  <option value="default" data-i18n="map_style_default">Map without City Names</option>
+                  <option value="names" data-i18n="map_style_named">Maps with City Names</option>
+                </select>
+              </label>
               <label class="field">
                 <span data-i18n="system_profile">System Profile</span>
                 <select id="system-profile">

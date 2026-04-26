@@ -475,6 +475,26 @@ select {
   font-size: 28px;
 }
 
+.menu-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-header-link {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.menu-header-link:hover,
+.menu-header-link:focus-visible {
+  color: #ffffff;
+}
+
 .menu-close {
   width: 44px;
   height: 44px;

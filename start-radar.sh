@@ -11,6 +11,7 @@ INSTANCE_LABELS=()
 SERVER_IP="0.0.0.0"
 SERVER_PORT_FALLBACK="7823"
 BROWSER_IP="127.0.0.1"
+DEFAULT_PASSWORD_CONFIG="$SCRIPT_DIR/config/password.toml"
 
 parse_config() {
   local config_path="$1"
@@ -119,12 +120,18 @@ start_all() {
   for item in "${INSTANCE_LABELS[@]}"; do
     instance_id="${item%%:*}"
     port="${item##*:}"
+    instance_password_config="$SCRIPT_DIR/config/passwords_server_manager/$instance_id.toml"
+    password_config="$DEFAULT_PASSWORD_CONFIG"
+    if [[ -f "$instance_password_config" ]]; then
+      password_config="$instance_password_config"
+    fi
     (
       export NEPTUNE_RADAR_ROOT="$SCRIPT_DIR"
       export NEPTUNE_RADAR_CONFIG="$CONFIG_PATH"
       export NEPTUNE_RADAR_IP="$SERVER_IP"
       export NEPTUNE_RADAR_PORT="$port"
       export NEPTUNE_RADAR_INSTANCE="$instance_id"
+      export NEPTUNE_RADAR_PASSWORD_CONFIG="$password_config"
       exec node "$SERVER_PATH"
     ) >>"$RUNTIME_DIR/$instance_id.log" 2>&1 &
     pid=$!
@@ -179,4 +186,3 @@ while true; do
   cleanup
   sleep 2
 done
-

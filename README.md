@@ -143,6 +143,10 @@ Behavior:
 - empty password = no login page
 - non-empty password = browser login required
 
+Instance behavior:
+- if `config/passwords_server_manager/<instance-id>.toml` exists, that instance uses its own password
+- otherwise the instance falls back to `config/password.toml`
+
 ## Updating
 
 Run:

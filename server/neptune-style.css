@@ -819,6 +819,12 @@ select {
   margin-top: 0;
 }
 
+.settings-action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
 .misc-slider {
   width: 100%;
   margin-top: 8px;
@@ -981,6 +987,18 @@ select {
 
 .primary-action {
   width: 100%;
+}
+
+.settings-action-button {
+  flex: 1 1 0;
+  width: auto;
+  min-height: 40px;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+
+#import-settings-file {
+  display: none;
 }
 
 .intro-screen {

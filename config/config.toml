@@ -1,0 +1,42 @@
+[server]
+ip = "0.0.0.0"
+
+[[instances]]
+id = "7823"
+port = 7823
+enabled = true
+
+[[instances]]
+id = "7824"
+port = 7824
+enabled = false
+
+[[instances]]
+id = "7825"
+port = 7825
+enabled = false
+
+[[instances]]
+id = "7826"
+port = 7826
+enabled = false
+
+[[instances]]
+id = "7827"
+port = 7827
+enabled = false
+
+[[instances]]
+id = "7828"
+port = 7828
+enabled = false
+
+[[instances]]
+id = "7829"
+port = 7829
+enabled = false
+
+[[instances]]
+id = "7830"
+port = 7830
+enabled = false

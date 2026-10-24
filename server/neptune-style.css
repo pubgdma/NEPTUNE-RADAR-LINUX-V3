@@ -456,9 +456,9 @@ select {
 }
 
 .menu-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
   gap: 16px;
   margin-bottom: 16px;
   cursor: grab;
@@ -479,6 +479,55 @@ select {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-left: auto;
+  justify-self: end;
+}
+
+.menu-header-discord {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 4px 6px;
+  border-radius: 10px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.menu-header-discord:hover,
+.menu-header-discord:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.watermark.menu-header-discord {
+  padding: 8px 12px;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 700px) {
+  .menu-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .menu-header > div:first-child {
+    grid-row: 1;
+  }
+
+  .menu-header-actions {
+    grid-row: 2;
+  }
+
+  .menu-header-discord {
+    grid-row: 3;
+  }
 }
 
 .menu-header-link {
@@ -506,6 +555,41 @@ select {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+}
+
+.menu-card-stack {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-width: 0;
+}
+
+.marker-color-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.marker-color-grid > .field {
+  display: grid;
+  grid-template-rows: 1fr 42px;
+  min-width: 0;
+  gap: 6px;
+}
+
+.marker-color-grid .field span {
+  font-size: 11px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.marker-color-grid .color-field input[type="color"] {
+  width: 100% !important;
+  min-width: 0;
+  max-width: 100%;
+  height: 42px;
+  min-height: 42px;
+  padding: 4px;
 }
 
 .vehicles-layout {

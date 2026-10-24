@@ -81,7 +81,15 @@
     </div>
 
     <div class="hud hud-bottom-left">
-      <a class="watermark" href="https://www.nepdma.com" target="_blank" rel="noopener noreferrer">WWW.NEPDMA.COM</a>
+      <a class="watermark menu-header-discord" href="https://discord.com/invite/bBVKp5nqYF" target="_blank" rel="noopener noreferrer" aria-label="Join Discord" title="Join Discord">
+        <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" focusable="false">
+          <circle cx="14" cy="14" r="14" fill="#5865f2"/>
+          <path d="M5 19C4 15 6 9 8 8L11 7L12 9H16L17 7L20 8C22 10 24 16 23 19L19 21L17 19C15 20 13 20 11 19L9 21Z" fill="#fff"/>
+          <ellipse cx="10.5" cy="15" rx="1.5" ry="2" fill="#5865f2"/>
+          <ellipse cx="17.5" cy="15" rx="1.5" ry="2" fill="#5865f2"/>
+        </svg>
+        <span>Join Discord</span>
+      </a>
     </div>
     <div class="hud hud-bottom-right" id="pubgdma-watermark-host"></div>
 
@@ -95,6 +103,15 @@
         <div>
           <h2 data-i18n="radar_settings">Radar Settings</h2>
         </div>
+          <a class="menu-header-discord" href="https://discord.com/invite/bBVKp5nqYF" target="_blank" rel="noopener noreferrer" aria-label="Join Discord" title="Join Discord">
+            <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" focusable="false">
+              <circle cx="14" cy="14" r="14" fill="#5865f2"/>
+              <path d="M5 19C4 15 6 9 8 8L11 7L12 9H16L17 7L20 8C22 10 24 16 23 19L19 21L17 19C15 20 13 20 11 19L9 21Z" fill="#fff"/>
+              <ellipse cx="10.5" cy="15" rx="1.5" ry="2" fill="#5865f2"/>
+              <ellipse cx="17.5" cy="15" rx="1.5" ry="2" fill="#5865f2"/>
+            </svg>
+            <span>Join Discord</span>
+          </a>
         <div class="menu-header-actions">
           <a class="menu-header-link" href="https://store.pubgdma.com" target="_blank" rel="noopener noreferrer">WWW.PUBGDMA.COM</a>
           <button id="menu-close" class="menu-close" type="button">×</button>
@@ -373,35 +390,57 @@
 
         <section class="menu-view" data-view="misc">
           <div class="menu-grid">
+            <div class="menu-card-stack">
             <section class="menu-card">
-              <div class="menu-card-title" data-i18n="misc">Misc</div>
+              <div class="menu-card-title" data-i18n="marker_settings">Marker Settings</div>
               <div class="misc-row">
                 <label class="check-field misc-check">
                   <input id="show-f3-marker" type="checkbox" checked/>
-                  <span data-i18n="marker">Marker</span>
+                  <span data-i18n="marker_size">Marker Size</span>
                 </label>
                 <input id="scale-f3-marker" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1.66"/>
               </div>
+              <div class="marker-color-grid">
+                <div class="field compact-field color-field">
+                  <span id="marker-color-1-label" data-i18n="marker_color_1">Player 1</span>
+                  <input id="marker-color-1" class="color-compact color-box" type="color" value="#ffff00" aria-labelledby="marker-color-1-label"/>
+                </div>
+                <div class="field compact-field color-field">
+                  <span id="marker-color-2-label" data-i18n="marker_color_2">Player 2</span>
+                  <input id="marker-color-2" class="color-compact color-box" type="color" value="#ff0000" aria-labelledby="marker-color-2-label"/>
+                </div>
+                <div class="field compact-field color-field">
+                  <span id="marker-color-3-label" data-i18n="marker_color_3">Player 3</span>
+                  <input id="marker-color-3" class="color-compact color-box" type="color" value="#008cff" aria-labelledby="marker-color-3-label"/>
+                </div>
+                <div class="field compact-field color-field">
+                  <span id="marker-color-4-label" data-i18n="marker_color_4">Player 4</span>
+                  <input id="marker-color-4" class="color-compact color-box" type="color" value="#00ff3c" aria-labelledby="marker-color-4-label"/>
+                </div>
+              </div>
               <label class="field">
-                <span data-i18n="marker_opacity">Marker Opacity</span>
+                <span data-i18n="marker_opacity">Marker Transparency</span>
                 <input id="marker-opacity" type="range" min="0" max="1" step="0.05" value="1"/>
               </label>
               <label class="field">
-                <span><span data-i18n="marker_hide_distance">Hide Markers Within (0 = Off)</span> <output id="marker-hide-distance-value" for="marker-hide-distance">0 m</output></span>
-                <input id="marker-hide-distance" type="range" min="0" max="200" step="1" value="0"/>
+                <span><span data-i18n="marker_hide_distance">Hide Markers Within (0 = Off)</span> <output id="marker-hide-distance-value" for="marker-hide-distance">30 m</output></span>
+                <input id="marker-hide-distance" type="range" min="0" max="200" step="1" value="30"/>
               </label>
               <label class="check-field misc-check">
-                <input id="show-marker-distance" type="checkbox"/>
+                <input id="show-marker-distance" type="checkbox" checked/>
                 <span data-i18n="marker_distance">Marker Distance</span>
               </label>
               <label class="field">
-                <span><span data-i18n="marker_distance_range">Hide Distance Text Within (0 = Off)</span> <output id="marker-distance-range-value" for="marker-distance-range">0 m</output></span>
-                <input id="marker-distance-range" type="range" min="0" max="1000" step="1" value="0"/>
+                <span><span data-i18n="marker_distance_range">Hide Distance Text Within (0 = Off)</span> <output id="marker-distance-range-value" for="marker-distance-range">200 m</output></span>
+                <input id="marker-distance-range" type="range" min="0" max="1000" step="1" value="200"/>
               </label>
               <label class="field">
                 <span><span data-i18n="marker_text_size">Marker Text Size</span> <output id="marker-text-size-value" for="marker-text-size">16 px</output></span>
                 <input id="marker-text-size" type="range" min="8" max="32" step="1" value="16"/>
               </label>
+            </section>
+            <section class="menu-card">
+              <div class="menu-card-title" data-i18n="misc">Misc</div>
               <div class="misc-row">
                 <label class="check-field misc-check">
                   <input id="show-airdrop-closed" type="checkbox" checked/>
@@ -438,6 +477,7 @@
                 <input id="scale-secret-room" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1"/>
               </div>
             </section>
+            </div>
             <section class="menu-card">
               <div class="menu-card-title" data-i18n="preferences">Preferences</div>
               <label class="field">

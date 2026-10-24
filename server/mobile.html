@@ -35,6 +35,7 @@
     </div>
 
     <canvas id="radar-canvas"></canvas>
+    <div id="jump-alert" class="jump-alert" role="status" aria-live="assertive" aria-atomic="true" hidden>JUMP NOW</div>
 
     <div class="hud hud-top">
       <div class="brand-panel">
@@ -122,6 +123,7 @@
         <button class="menu-tab active" type="button" data-tab="camera" data-i18n="camera">Camera</button>
         <button class="menu-tab" type="button" data-tab="players" data-i18n="players">Players</button>
         <button class="menu-tab" type="button" data-tab="vehicles" data-i18n="vehicles">Vehicles</button>
+        <button class="menu-tab" type="button" data-tab="marker" data-i18n="marker">Marker</button>
         <button class="menu-tab" type="button" data-tab="misc" data-i18n="misc">Misc</button>
       </div>
 
@@ -388,9 +390,8 @@
           </div>
         </section>
 
-        <section class="menu-view" data-view="misc">
+        <section class="menu-view" data-view="marker">
           <div class="menu-grid">
-            <div class="menu-card-stack">
             <section class="menu-card">
               <div class="menu-card-title" data-i18n="marker_settings">Marker Settings</div>
               <div class="misc-row">
@@ -440,6 +441,30 @@
               </label>
             </section>
             <section class="menu-card">
+              <div class="menu-card-title" data-i18n="jump_alert_settings">Jump Alert</div>
+              <label class="check-field misc-check">
+                <input id="enable-jump-alert-8x8" type="checkbox" checked/>
+                <span data-i18n="jump_alert_8x8">Jump Alert 8x8</span>
+              </label>
+              <label class="field">
+                <span><span data-i18n="jump_alert_distance_8x8">Jump Alert Distance 8x8</span> <output id="jump-alert-distance-8x8-value" for="jump-alert-distance-8x8">750 m</output></span>
+                <input id="jump-alert-distance-8x8" type="range" min="100" max="1500" step="25" value="750"/>
+              </label>
+              <label class="check-field misc-check">
+                <input id="enable-jump-alert-4x4" type="checkbox" checked/>
+                <span data-i18n="jump_alert_4x4">Jump Alert 4x4</span>
+              </label>
+              <label class="field">
+                <span><span data-i18n="jump_alert_distance_4x4">Jump Alert Distance 4x4</span> <output id="jump-alert-distance-4x4-value" for="jump-alert-distance-4x4">750 m</output></span>
+                <input id="jump-alert-distance-4x4" type="range" min="100" max="1500" step="25" value="750"/>
+              </label>
+            </section>
+          </div>
+        </section>
+
+        <section class="menu-view" data-view="misc">
+          <div class="menu-grid">
+            <section class="menu-card">
               <div class="menu-card-title" data-i18n="misc">Misc</div>
               <div class="misc-row">
                 <label class="check-field misc-check">
@@ -477,7 +502,6 @@
                 <input id="scale-secret-room" class="misc-slider" type="range" min="0.4" max="2.5" step="0.1" value="1"/>
               </div>
             </section>
-            </div>
             <section class="menu-card">
               <div class="menu-card-title" data-i18n="preferences">Preferences</div>
               <label class="field">
@@ -496,6 +520,10 @@
                 <span data-i18n="menu_color">Menu color</span>
                 <input id="menu-color" class="color-compact" type="color" value="#2dffd3"/>
               </div>
+              <label class="field">
+                <span><span data-i18n="menu_size">Menu Size</span> <output id="menu-size-value" for="menu-size">90%</output></span>
+                <input id="menu-size" type="range" min="50" max="150" step="5" value="90"/>
+              </label>
               <label class="field">
                 <span data-i18n="map_style">Map Style</span>
                 <select id="map-style">

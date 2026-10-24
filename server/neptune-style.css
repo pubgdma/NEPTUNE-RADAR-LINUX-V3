@@ -356,6 +356,39 @@ select {
   z-index: 8;
 }
 
+.jump-alert {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  max-width: calc(100vw - 32px);
+  padding: 14px 24px;
+  border: 2px solid #ffd54a;
+  border-radius: 16px;
+  background: rgba(10, 15, 22, 0.94);
+  color: #ffffff;
+  font-size: clamp(28px, 6vw, 58px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+  pointer-events: none;
+  animation: jump-alert-pulse 1s ease-in-out infinite;
+}
+
+.jump-alert[hidden] {
+  display: none;
+}
+
+@keyframes jump-alert-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jump-alert { animation: none; }
+}
+
 .hud-bottom-right {
   bottom: 20px;
   right: 20px;
@@ -426,11 +459,13 @@ select {
 
 .menu-panel {
   position: absolute;
+  overflow: auto;
   left: 50%;
   bottom: 88px;
   z-index: 7;
   width: min(960px, calc(100vw - 28px));
-  transform: translateX(-50%) translateY(24px);
+  transform: translateX(-50%) translateY(24px) scale(var(--menu-scale, 0.9));
+  transform-origin: center bottom;
   opacity: 0;
   pointer-events: none;
   padding: 18px;
@@ -444,15 +479,16 @@ select {
 .menu-panel.open {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateY(0) scale(var(--menu-scale, 0.9));
 }
 
 .menu-panel.floating {
-  transform: translateY(24px);
+  transform: translateY(24px) scale(var(--menu-scale, 0.9));
+  transform-origin: left top;
 }
 
 .menu-panel.floating.open {
-  transform: translateY(0);
+  transform: translateY(0) scale(var(--menu-scale, 0.9));
 }
 
 .menu-header {
@@ -599,7 +635,7 @@ select {
 
 .menu-tabs {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 14px;
 }
@@ -1235,12 +1271,19 @@ select {
   }
 
   .menu-tabs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .menu-tab {
+    padding: 10px 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .menu-panel {
     width: calc(100vw - 18px);
     bottom: 80px;
-    left: 9px !important;
   }
 }

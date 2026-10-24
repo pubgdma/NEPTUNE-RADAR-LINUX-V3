@@ -216,18 +216,19 @@ body.mobile-route .menu-panel {
   top: auto !important;
   width: 100vw;
   max-width: none;
+  margin-inline: auto;
   padding: 14px 12px calc(env(safe-area-inset-bottom, 0px) + 14px);
   border-radius: 20px 20px 0 0;
   border-left: 0;
   border-right: 0;
   border-bottom: 0;
-  transform: translateY(100%);
+  transform: translateY(100%) scale(var(--menu-scale, 0.9));
   z-index: 30;
 }
 
 body.mobile-route .menu-panel.open,
 body.mobile-route .menu-panel.floating.open {
-  transform: translateY(0);
+  transform: translateY(0) scale(var(--menu-scale, 0.9));
 }
 
 body.mobile-route .menu-panel.floating {
@@ -235,7 +236,8 @@ body.mobile-route .menu-panel.floating {
   right: 0 !important;
   top: auto !important;
   bottom: 0 !important;
-  transform: translateY(100%);
+  transform: translateY(100%) scale(var(--menu-scale, 0.9));
+  transform-origin: center bottom;
 }
 
 body.mobile-route .menu-header {
@@ -254,13 +256,13 @@ body.mobile-route .menu-tabs {
   z-index: 2;
   background: rgba(4, 15, 23, 0.96);
   padding-bottom: 8px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 body.mobile-route .menu-tab {
   min-height: 46px;
-  padding: 10px 8px;
-  font-size: 13px;
+  padding: 10px 4px;
+  font-size: 11px;
 }
 
 body.mobile-route .menu-body {
